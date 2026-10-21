@@ -6,7 +6,7 @@ RUN go mod download
 COPY *.go ./
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags="-s -w" -o /proxy . && mkdir /state
 
-FROM gcr.io/distroless/static-debian12:nonroot
+FROM gcr.io/distroless/static-debian13:nonroot
 COPY --from=build --chown=nonroot:nonroot /state /state
 COPY --from=build /proxy /proxy
 ENV STATE_DIR=/state
